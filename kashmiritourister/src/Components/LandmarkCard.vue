@@ -7,6 +7,7 @@
                 <h2>{{ landmark }}</h2>
                 {{ location }}<br>
                 {{ type }}<br>
+                <p class="bestVisit">{{bestVisit}}</p>
             <div class="card-property-holder" >  
                 <div class="card-property" v-for="(prop,index) in properties">{{ prop }}</div>
             </div>  
@@ -18,15 +19,7 @@
 
 <script>
 export default {
-    // data() {
-    //     return {
-    //         landmark: 'Gulmarg',
-    //         location: 'Baramulla',
-    //         type: 'Tourist Attraction',
-    //         properties: ['meadows', 'forests', 'landscapes']
-    //     }
-    // },
-    props: ['landmark','location','type','properties','image']
+    props: ['landmark','location','type','properties','image','bestVisit']
 }
 
 </script>
@@ -69,8 +62,8 @@ export default {
 h2{
     font-size: x-large;
 }
-/*display and margin lines make the component center*/
-    /* display: block;
-    margin: 10px auto; */
+.bestVisit{
+    margin-block: 30px;
+}
 </style>
 
