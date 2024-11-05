@@ -1,22 +1,23 @@
 <template>
 
     <div class="landmark-container">
-        <landmark-card class="card-container" :key="index" :landmark="landmark" :location="location" :type="type"
-            :properties="properties" :image="image" :best-visit="best_time_to_visit" />
+        <landmark-card class="card-container" :key="index" :landmark="landmark.landmark" :location="landmark.location"
+            :type="landmark.type" :properties="landmark.properties" :image="landmark.image"
+            :best-visit="landmark.best_time_to_visit" />
         <div class="landmarkDetails">
             <div class="map-row">
-                <map-iframe class="iframe-container" :iframesrc="iframesrc" />
+                <map-iframe class="iframe-container" :iframesrc="landmark.iframesrc" />
                 <div class="about-article">
                     <h3 class="h3-heading">About</h3>
                     <p class="about-para">
-                        {{ about }}
+                        {{ landmark.about }}
                     </p>
                 </div>
             </div>
             <div class="about-section">
                 <h3>Highlights</h3>
                 <ul>
-                    <li v-for="(highlight, index) in highlights" :key="index">{{ highlight }}</li>
+                    <li v-for="(highlight, index) in landmark.highlights" :key="index">{{ highlight }}</li>
                 </ul>
             </div>
         </div>
@@ -25,27 +26,33 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     // props: ['landmark', 'location', 'type', 'properties', 'image', 'iframesrc','highlights','about',"bestVisit"]
 
     data() {
         return {
-            "id": 2,
-            "landmark": "Pahalgam",
-            "location": "Anantnag",
-            "type": "Tourist Attraction",
-            "properties": ["Valleys", "River", "Hiking trails"],
-            "image": "https://suvidhatravel.com/wp-content/uploads/2021/10/pahalgam-3-870x555.jpg",
-            "iframesrc": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26458.4331077942!2d75.29502489236299!3d34.01040333302159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e23f2a7b9509df%3A0x8c1cff001fb18c5!2sPahalgam!5e0!3m2!1sen!2sin!4v1730656520081!5m2!1sen!2sin",
-            "highlights": [
-                "Lidder River offers opportunities for trout fishing and riverside picnics, enhancing the natural charm of the valley.",
-                "Starting point for the Amarnath Yatra pilgrimage, which brings thousands of devotees every year.",
-                "Surrounded by valleys like Betaab Valley and Aru Valley, providing breathtaking views and a serene atmosphere ideal for nature lovers."
-            ],
-            "about": "Pahalgam, located in the heart of the Kashmir Valley, is known for its tranquil ambiance and pristine natural beauty. It’s not only a popular destination for nature walks and trekking but also serves as the base camp for the annual Amarnath Yatra. With rivers, forests, and panoramic views, Pahalgam is a beloved escape for those seeking peace, adventure, or spirituality.",
-            "best_time_to_visit": "March to June for pleasant weather, and September to November for beautiful autumn scenery."
+            landmark: {
+                "id": null,
+                "landmark": "",
+                "location": "",
+                "type": "",
+                "properties": [],
+                "image": "",
+                "iframesrc": "",
+                "highlights": [],
+                "about": "",
+                "best_time_to_visit": ""
+            }
         }
-
+    },
+    props: ['id'],
+    mounted() {
+        const id = this.$route.params.id;
+        console.log("id is",id)
+        const link = "/proxy/api/Landmarks/id/" + id;
+        axios.get(link).then(response => {console.log(response.data);this.landmark = response.data})
     }
 }
 </script>

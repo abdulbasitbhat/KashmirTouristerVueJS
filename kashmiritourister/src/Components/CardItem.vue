@@ -1,5 +1,5 @@
 <template>
-    <router-link class="routerLink" to="/landmark/{{id}}">
+    <router-link class="routerLink" :to="`/landmark/${id}`">
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" :src="image" alt="Card image cap">
             <div class="card-body">
@@ -27,7 +27,7 @@ export default {
     //         properties: ['meadows', 'forests', 'landscapes']
     //     }
     // },
-    props: ['id','landmark', 'location', 'type', 'properties', 'image']
+    props: ['id','landmark', 'location', 'type', 'properties', 'image'],
 }
 
 </script>
