@@ -395,8 +395,7 @@ export default {
     }
   },
   mounted(){
-    axios.get('/proxy/api/Landmarks/allLandmarks').then(response => {this.landmarks=response.data;console.log(response.data)}).catch(error => console.error(error));;
-    
+    axios.get('/proxy/api/Landmarks/allLandmarks').then(response => {this.landmarks=response.data;console.log(response.data)}).catch(error => console.error(error));
   }
 }
 </script>

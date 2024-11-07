@@ -17,13 +17,13 @@ export default {
 
 <style>
 .mapEmbedding {
-    margin: 28px;
+    margin-block: 31px;
+    margin-inline: 28px;
     display: flex;
 }
-
 .map-iframe{
-    border-radius: 10px;
+    border-radius: 6px;
     width: 375px;
-    height: 375px;
+    height: 369px;
 }
 </style>

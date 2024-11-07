@@ -1,36 +1,22 @@
 <template>
-    
-    <div class="card landmarkCard" style="width: 18rem;">
+   <div class="card landmarkCard" style="width: 18rem;">
         <img class="card-img-top card-image" :src="image" alt="Card image cap">
         <div class="card-body">
             <p class="card-text">
-                <h2>{{ landmark }}</h2>
-                {{ location }}<br>
-                {{ type }}<br>
-                <p class="bestVisit">{{bestVisit}}</p>
+                <h2>{{ topic }}</h2>
+                {{ subtitle }}<br>
             <div class="card-property-holder" >  
-                <div class="card-property" v-for="(prop,index) in properties">{{ prop }}</div>
+                <div class="card-property" v-for="(tag,index) in tags">{{ tag }}</div>
             </div>  
             </p>
-            <button class="delete-button" @click="handleDelete">Delete</button>
         </div>
     </div>
-
 </template>
 
 <script>
-import axios from 'axios';
-
-export default {
-    props: ['id','landmark','location','type','properties','image','bestVisit'],
-    methods:{
-        async handleDelete(){
-            const url = "/proxy/api/Landmarks/delete/" + this.id;
-            axios.delete(url).then(response => {console.log('Deleted successfully');this.$router.push('/')})
-        }
-    },
+export default{
+    props:['image','topic','subtitle','tags']
 }
-
 </script>
 
 <style>
@@ -74,11 +60,4 @@ h2{
 .bestVisit{
     margin-block: 30px;
 }
-.delete-button{
-    margin-block: 10px;
-    height: 32px;
-    width: 130px;
-    border-radius: 20px;
-}
 </style>
-

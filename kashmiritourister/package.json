@@ -9,9 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-vue": "^7.2.0",
+    "@tiptap/pm": "^2.9.1",
+    "@tiptap/starter-kit": "^2.9.1",
+    "@tiptap/vue-3": "^2.9.1",
     "axios": "^1.7.7",
+    "ckeditor5": "^43.3.1",
     "cors": "^2.8.5",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.2.1",
+    "quill": "^2.0.2",
+    "tinymce": "^7.5.0",
     "vue": "^3.5.12",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {

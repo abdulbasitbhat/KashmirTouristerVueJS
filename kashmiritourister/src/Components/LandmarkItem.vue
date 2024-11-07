@@ -1,11 +1,17 @@
 <template>
 
     <div class="landmark-container">
-        <landmark-card class="card-container" :key="index" :landmark="landmark.landmark" :location="landmark.location"
+        <landmark-card class="card-container" :key="index" :id="landmark.id" :landmark="landmark.landmark" :location="landmark.location"
             :type="landmark.type" :properties="landmark.properties" :image="landmark.image"
             :best-visit="landmark.best_time_to_visit" />
         <div class="landmarkDetails">
             <div class="map-row">
+                <!-- <div class="geography">
+                    <map-iframe class="iframe-container" :iframesrc="landmark.iframesrc" />
+                    <div class="weather">
+                        <WeatherForcast/>
+                    </div>
+                </div> -->
                 <map-iframe class="iframe-container" :iframesrc="landmark.iframesrc" />
                 <div class="about-article">
                     <h3 class="h3-heading">About</h3>
@@ -44,15 +50,27 @@ export default {
                 "highlights": [],
                 "about": "",
                 "best_time_to_visit": ""
-            }
+            },
+            place: null,
+            currentWeather: {},
+            forcast: {}
         }
     },
     props: ['id'],
     mounted() {
         const id = this.$route.params.id;
-        console.log("id is",id)
+        console.log("id is", id)
         const link = "/proxy/api/Landmarks/id/" + id;
-        axios.get(link).then(response => {console.log(response.data);this.landmark = response.data})
+        axios.get(link).then(response => {
+            console.log(response.data);
+            this.landmark = response.data;
+            axios.get("https://api.weatherapi.com/v1/forecast.json?key=74449658b2de4ee3b8e174328240511&q=" + response.data.landmark + "&days=3&aqi=yes&alerts=yes").then(responsee => {
+                console.log(responsee);
+                console.log(responsee);
+                this.currentWeather = responsee.current;
+                this.forcast = responsee.forcast
+            })
+        });
     }
 }
 </script>
@@ -120,5 +138,16 @@ export default {
 
 .box-shadows {
     box-shadow: 5px 5px 7px #888888;
+}
+.geography{
+    display:flex;
+    flex-direction: column;
+}
+.weather{
+    background: #f1f1f1;
+    height: 95px;
+    width: 371px;
+    margin-inline: 30px;
+    border-radius: 7px;
 }
 </style>
