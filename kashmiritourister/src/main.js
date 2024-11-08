@@ -16,6 +16,7 @@ import BlogsCards from "./Components/BlogsCards.vue";
 import CreateBlog from "./Components/CreateBlog.vue";
 import TextEditor from "./Components/TextEditor.vue";
 import AddLandmarks from "./Components/AddLandmarks.vue";
+import BlogItem from "./Components/BlogItem.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,7 @@ const router = createRouter({
     { path: "/blogs", component: Blogs },
     { path: "/createBlog", component: CreateBlog },
     { path: "/addLandmark", component: AddLandmarks },
+    { path: "/blog/:id", component: BlogItem },
   ],
 });
 
@@ -45,4 +47,5 @@ app.component("BlogsCards", BlogsCards);
 app.component("CreateBlog", CreateBlog);
 app.component("TextEditor",TextEditor)
 app.component("AddLandmarks",AddLandmarks)
+app.component("BlogItem",BlogItem)
 app.use(router).mount("#app");

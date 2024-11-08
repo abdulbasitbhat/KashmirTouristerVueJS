@@ -12,7 +12,7 @@
           <!-- <li><a href="/plantrip" class="nav-link px-2 text-white">Plan Trip</a></li>-->
           <li><a href="/blogs" class="nav-link px-2 text-white">Blogs</a></li>
           <li><a href="/createBlog" class="nav-link px-2 text-white">Create Blog</a></li>
-          <li><a href="/addLandmark" class="nav-link px-2 text-white">Add Landmarks</a></li> 
+          <li><a href="/addLandmark" class="nav-link px-2 text-white">Add Places</a></li> 
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
