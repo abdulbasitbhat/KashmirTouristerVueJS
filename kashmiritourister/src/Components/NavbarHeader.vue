@@ -9,10 +9,11 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 text-white">Places</a></li>
-          <!-- <li><a href="/plantrip" class="nav-link px-2 text-white">Plan Trip</a></li>-->
           <li><a href="/blogs" class="nav-link px-2 text-white">Blogs</a></li>
+          <li><a href="/certify" class="nav-link px-2 text-white">Certify</a></li>
           <li><a href="/createBlog" class="nav-link px-2 text-white">Create Blog</a></li>
           <li><a href="/addLandmark" class="nav-link px-2 text-white">Add Places</a></li> 
+          <li><a href="/certifyrequests" class="nav-link px-2 text-white">Certify Requests</a></li>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">

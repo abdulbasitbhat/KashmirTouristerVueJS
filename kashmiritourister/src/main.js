@@ -17,6 +17,8 @@ import CreateBlog from "./Components/CreateBlog.vue";
 import TextEditor from "./Components/TextEditor.vue";
 import AddLandmarks from "./Components/AddLandmarks.vue";
 import BlogItem from "./Components/BlogItem.vue";
+import CertificateCard from "./Components/CertificateCard.vue";
+import CertifyRequests from "./Components/CertifyRequests.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,6 +30,8 @@ const router = createRouter({
     { path: "/createBlog", component: CreateBlog },
     { path: "/addLandmark", component: AddLandmarks },
     { path: "/blog/:id", component: BlogItem },
+    { path: "/certify", component: CertificateCard },
+    { path: "/certifyrequests", component: CertifyRequests },
   ],
 });
 
@@ -48,4 +52,6 @@ app.component("CreateBlog", CreateBlog);
 app.component("TextEditor",TextEditor)
 app.component("AddLandmarks",AddLandmarks)
 app.component("BlogItem",BlogItem)
+app.component("CertificateCard",CertificateCard)
+app.component("CertifyRequests",CertifyRequests)
 app.use(router).mount("#app");
