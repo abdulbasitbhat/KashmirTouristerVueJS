@@ -10,52 +10,30 @@
             <td>Issue</td>
         </thead>
         <tr class="tableRow" v-for="(req, index) in requests" :key="index">
-            <td>{{ req.requestId }}</td>
-            <td>{{ req.image }}</td>
+            <td>{{ req.id }}</td>
+            <td><img class="image-sec" :src="req.image"></td>
             <td>{{ req.landmark }}</td>
             <td>{{ req.email }}</td>
             <td>{{ req.hallOfTravellers }}</td>
             <td><input type="file" /></td>
-            <td><button class="issueButton" @click="handleIssue">Issue</button></td>
+            <td >
+                <span v-if="req.issueStatus === true">Issued</span>
+                <button v-else class="issueButton" @click="handleIssue">Issue</button></td>
         </tr>
     </table>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
-            requests: [
-                {
-                    "requestId": "1",
-                    "image": "backendLink",
-                    "landmark": "djdhsfbsjd",
-                    "email": "dflksdkfns@gmail.com",
-                    "hallOfTravellers": true,
-                },
-                {
-                    "requestId": "2",
-                    "image": "backendLink2",
-                    "landmark": "djdhsfbsjd",
-                    "email": "dflksdkfns@gmail.com",
-                    "hallOfTravellers": true,
-                },
-                {
-                    "requestId": "3",
-                    "image": "backendLink3",
-                    "landmark": "djdhsfbsjd",
-                    "email": "dflksdkfns@gmail.com",
-                    "hallOfTravellers": true,
-                },
-                {
-                    "requestId": "4",
-                    "image": "backendLink4",
-                    "landmark": "djdhsfbsjd",
-                    "email": "dflksdkfns@gmail.com",
-                    "hallOfTravellers": true,
-                },
-            ]
+            requests: null,
         }
+    },
+    mounted() {
+        axios.get('/proxy/api/certify/CertificateRequest/allRequests').then(response => { this.requests = response.data })
     }
 }
 </script>
@@ -81,10 +59,20 @@ td {
 .tableRow td {
     font-size: 14px;
 }
-.issueButton{
+
+.issueButton {
     width: 75px;
     height: 25px;
     border-radius: 20px;
     background: #aaaab3;
+}
+
+tr td {
+    max-width: 155px;
+    overflow: auto;
+}
+.image-sec{
+    width: 100%;
+    height: 80%;
 }
 </style>

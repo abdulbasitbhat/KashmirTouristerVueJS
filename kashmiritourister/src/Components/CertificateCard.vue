@@ -20,30 +20,40 @@
             <input type="checkbox" v-model="uploadData.hallOfTravellers" />
             Would you like this image to be in our hall of travellers
         </div>
-        <button type="button" class="btn btn-success">Upload</button>
+        <button type="button" class="btn btn-success" @click="handleSubmit">Upload</button>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
             uploadData: {
-                uploadedImage: null,
+                image: null,
                 landmark: null,
                 hallOfTravellers: false,
-                email: ""
+                email: "",
+                issueStatus:false
             }
         }
     },
     methods: {
         async handleSubmit() {
             console.log("uploadData", this.uploadData)
+            axios.post("/proxy/api/certify/CertificateRequest/addRequest",this.uploadData).then(response => {console.log("saved successfully")})
         },
         handleFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                this.uploadData.uploadedImage = file;
+                // Logic for conversion of image to base64 string for storage at backend
+                //reader onload only works after readAsDataUrl and e is passed to reader.onload. Its async
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.uploadData.image = e.target.result;
+                }
+                reader.readAsDataURL(file);
             }
             else {
                 this.uploadData.uploadedImage = null;
