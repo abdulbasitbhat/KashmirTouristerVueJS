@@ -43,6 +43,7 @@ export default {
         async handleSubmit() {
             console.log("uploadData", this.uploadData)
             axios.post("/proxy/api/certify/CertificateRequest/addRequest",this.uploadData).then(response => {console.log("saved successfully")})
+            alert("Uploaded Successfully")
         },
         handleFileUpload(event) {
             const file = event.target.files[0];

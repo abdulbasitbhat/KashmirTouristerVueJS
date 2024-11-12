@@ -15,10 +15,11 @@
             <td>{{ req.landmark }}</td>
             <td>{{ req.email }}</td>
             <td>{{ req.hallOfTravellers }}</td>
-            <td><input type="file" /></td>
-            <td >
+            <td><input type="file" @change="handleFileUpload" /></td>
+            <td>
                 <span v-if="req.issueStatus === true">Issued</span>
-                <button v-else class="issueButton" @click="handleIssue">Issue</button></td>
+                <button v-else class="issueButton" @click="uploadCertificate(req.id,req.email)">Issue</button>
+            </td>
         </tr>
     </table>
 </template>
@@ -29,11 +30,54 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            certificateData: {
+                certificate: null
+            },
             requests: null,
+            uid: null,
+            link: null,
+            prevData: {
+
+            }
         }
     },
     mounted() {
         axios.get('/proxy/api/certify/CertificateRequest/allRequests').then(response => { this.requests = response.data })
+    },
+    methods: {
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.certificateData.certificate = e.target.result;
+                }
+                reader.readAsDataURL(file)
+            }
+        },
+        async uploadCertificate(reqId,email) {
+            axios.post("/proxy/api/Certificate/certificate/upload", this.certificateData).then(
+                response => {
+                    this.uid = response.data.id;
+                    this.link = "https://localhost:7248/api/Certificate/certificate/" + response.data.id;
+                    //send an email with the uid and link
+                }
+            ).then(
+                () => {
+                    const link = "/proxy/api/certify/CertificateRequest/delete/" + reqId;
+                    axios.delete(link).then(() => { console.log("Deleted"); })
+                    this.$router.push({
+                        path: '/certificateData',
+                        query: {
+                            uid: this.uid,
+                            link: this.link,
+                            email:email
+                        }
+                    })
+                }
+            )
+        }
     }
 }
 </script>
@@ -71,7 +115,8 @@ tr td {
     max-width: 155px;
     overflow: auto;
 }
-.image-sec{
+
+.image-sec {
     width: 100%;
     height: 80%;
 }
