@@ -1,9 +1,9 @@
 <template>
 
     <div class="landmark-container">
-        <landmark-card class="card-container" :key="index" :id="landmark.id" :landmark="landmark.landmark" :location="landmark.location"
-            :type="landmark.type" :properties="landmark.properties" :image="landmark.image"
-            :best-visit="landmark.best_time_to_visit" />
+        <landmark-card class="card-container" :key="index" :id="landmark.id" :landmark="landmark.landmark"
+            :location="landmark.location" :type="landmark.type" :properties="landmark.properties"
+            :image="landmark.image" :best-visit="landmark.best_time_to_visit" />
         <div class="landmarkDetails">
             <div class="map-row">
                 <!-- <div class="geography">
@@ -27,6 +27,9 @@
                 </ul>
             </div>
         </div>
+    </div>
+    <div class="imageGridMain">
+        <ImagesGrid />
     </div>
 
 </template>
@@ -139,11 +142,13 @@ export default {
 .box-shadows {
     box-shadow: 5px 5px 7px #888888;
 }
-.geography{
-    display:flex;
+
+.geography {
+    display: flex;
     flex-direction: column;
 }
-.weather{
+
+.weather {
     background: #f1f1f1;
     height: 95px;
     width: 371px;

@@ -21,8 +21,10 @@
     "quill": "^2.0.2",
     "tinymce": "^7.5.0",
     "vue": "^3.5.12",
+    "vue-google-oauth2": "^1.5.10",
     "vue-quill-editor": "^3.0.6",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vue3-google-login": "^2.0.33"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

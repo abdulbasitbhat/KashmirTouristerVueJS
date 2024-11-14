@@ -14,15 +14,18 @@
           <li><a href="/createBlog" class="nav-link px-2 text-white">Create Blog</a></li>
           <li><a href="/addLandmark" class="nav-link px-2 text-white">Add Places</a></li> 
           <li><a href="/certifyrequests" class="nav-link px-2 text-white">Certify Requests</a></li>
+          <!-- <li><a href="/signIn" class="nav-link px-2 text-white">Sign In</a></li> -->
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
           <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-        </form>
+        </form> -->
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          <a href="/profile" class="btn btn-outline-light me-2">Profile</a>
+          <!-- <button type="button" class="btn btn-outline-light me-2">Log In / Sign Up</button> -->
+           <GoogleSignIn  class="btn me-2"/>
+          <!-- <button type="button" class="btn btn-warning">Sign-up</button> -->
         </div>
       </div>
     </div>
@@ -30,6 +33,8 @@
 </template>
 
 <script>
+import GoogleSignIn from './GoogleSignIn.vue';
+
 export default {
     
 }
