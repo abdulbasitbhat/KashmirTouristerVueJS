@@ -4,11 +4,17 @@
         <br>
         <div class="input-item">
             Email<br>
-            <input class="input-certify" type="text" v-model="uploadData.email" />
+            <span>{{ uploadData.email }}</span>
         </div>
         <div class="input-item">
             Place Of Visit<br>
-            <input class="input-certify" type="text" v-model="uploadData.landmark" />
+            <!-- <input class="input-certify" type="text" v-model="uploadData.landmark" /> -->
+            <select class="input-certify" @change="handleSelect">
+                <!-- <option value="" disabled>Select a place</option> -->
+                <option v-for="option in selectOptions" :key="option.place" :value="option.id">
+                    {{ option.place }}
+                </option>
+            </select>
         </div>
         <div class="file-input">
             <div class="upload-label">
@@ -34,16 +40,27 @@ export default {
                 image: null,
                 landmark: null,
                 hallOfTravellers: false,
-                email: "",
-                issueStatus:false
-            }
+                email: sessionStorage.getItem("useremail"),
+                issueStatus: false,
+                landmarkId: ""
+            },
+            landmarks: [],
+            selectOptions: []
         }
     },
     methods: {
         async handleSubmit() {
-            console.log("uploadData", this.uploadData)
-            axios.post("/proxy/api/certify/CertificateRequest/addRequest",this.uploadData).then(response => {console.log("saved successfully")})
-            alert("Uploaded Successfully")
+            if (!this.uploadData.landmark) {
+                const defaultLandmark = "Gulmarg";
+                const defaultOption = this.selectOptions.find(option => option.place === defaultLandmark);
+                if (defaultOption) {
+                    this.uploadData.landmarkId = defaultOption.id;
+                    this.uploadData.landmark = defaultLandmark;
+                }
+                console.log("uploadData", this.uploadData)
+                axios.post("/proxy/api/certify/CertificateRequest/addRequest", this.uploadData).then(response => { console.log("saved successfully") })
+                alert("Uploaded Successfully");
+            }
         },
         handleFileUpload(event) {
             const file = event.target.files[0];
@@ -59,7 +76,31 @@ export default {
             else {
                 this.uploadData.uploadedImage = null;
             }
+        },
+        async populateLandmarkSelect() {
+            await axios.get("/proxy/api/Landmarks/allLandmarks").then((resp) => { this.landmarks = resp.data });
+            this.landmarks.forEach((item, index) => {
+                var mapp = {
+                    "place": item.landmark,
+                    "id": item.id
+                }
+                this.selectOptions.push(mapp)
+            })
+            console.log("selectedOp", this.selectOptions)
+        },
+        handleSelect(event) {
+            const selectedId = event.target.value;
+            const selectedOption = this.selectOptions.find(option => option.id === selectedId);
+
+            if (selectedOption) {
+                this.uploadData.landmarkId = selectedOption.id;
+                this.uploadData.landmark = selectedOption.place;
+            }
         }
+
+    },
+    mounted() {
+        this.populateLandmarkSelect();
     }
 }
 </script>

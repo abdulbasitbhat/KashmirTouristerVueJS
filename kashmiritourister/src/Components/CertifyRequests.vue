@@ -17,10 +17,11 @@
             <td>{{ req.email }}</td>
             <!-- <td>{{ req.hallOfTravellers }}</td> -->
             <!-- <td><input type="file" @change="handleFileUpload" /></td> -->
-            <td><input type="text" v-model="landmarkId" /></td>
+            <!-- <td><input v-if="req.issueStatus === false" type="text" v-model="landmarkId" /> -->
+            <td>{{ req.landmarkId }}</td>
             <td>
                 <span v-if="req.issueStatus === true">Issued</span>
-                <button v-else class="issueButton" @click="uploadCertificate(req.id, req.email)">Issue</button>
+                <button v-else class="issueButton" @click="uploadCertificate(req.id, req.email, req.landmarkId)">Issue</button>
             </td>
         </tr>
     </table>
@@ -43,13 +44,13 @@ export default {
             },
             certificateCollId: "",
             newCollection: [],
-            landmarkId: "",
+            // landmarkId: "",
             image: "",
             previousCollection: []
         }
     },
     mounted() {
-        axios.get('/proxy/api/certify/CertificateRequest/allRequests').then(response => { this.requests = response.data })
+        axios.get('/proxy/api/certify/CertificateRequest/allRequests').then(response => { this.requests = response.data.reverse() })
     },
     methods: {
         handleFileUpload(event) {
@@ -63,12 +64,12 @@ export default {
                 reader.readAsDataURL(file)
             }
         },
-        async uploadCertificate(reqId, email) {
+        async uploadCertificate(reqId, email, landmarkId) {
             try {
                 // Step 1: Post Certificate
                 const cert = {
                     email: email,
-                    cardId: this.landmarkId,
+                    cardId: landmarkId,
                     image: this.image
                 };
 
@@ -94,6 +95,7 @@ export default {
                 const updateData = {
                     "email": "",
                     "landmark": "",
+                    "landmarkId":"",
                     "image": "",
                     "hallOfTravellers": true,
                     "issueStatus": true

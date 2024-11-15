@@ -6,7 +6,7 @@
                 <p class="ccard-text">
                 <h2>{{ landmark }}</h2>
                 {{ location }}<br>
-                id <br>
+                {{certid}}<br>
                 <div class="ccard-property-holder">
                     <div class="ccard-property" v-for="(prop, index) in properties">{{ prop }}</div>
                 </div>
@@ -27,7 +27,7 @@ export default {
     //         properties: ['meadows', 'forests', 'landscapes']
     //     }
     // },
-    props: ['id','landmark', 'location', 'type', 'properties', 'image'],
+    props: ['id','landmark', 'location', 'type', 'properties', 'image','certid'],
 }
 
 </script>
