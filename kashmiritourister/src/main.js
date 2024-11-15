@@ -35,11 +35,11 @@ const router = createRouter({
     { path: "/landmark/:id", component: LandmarkItem },
     { path: "/plantrip", component: PlanTrip },
     { path: "/blogs", component: Blogs },
-    { path: "/createBlog", component: CreateBlog },
-    { path: "/addLandmark", component: AddLandmarks },
+    { path: "/createBlog", component: CreateBlog, beforeEnter: isAdmin  },
+    { path: "/addLandmark", component: AddLandmarks, beforeEnter: isAdmin  },
     { path: "/blog/:id", component: BlogItem },
-    { path: "/certify", component: CertificateCard },
-    { path: "/certifyrequests", component: CertifyRequests },
+    { path: "/certify", component: CertificateCard, beforeEnter: isLoggedIn  },
+    { path: "/certifyrequests", component: CertifyRequests, beforeEnter: isAdmin  },
     { path: "/certificateData", component: CertificateData },
     { path: "/profile", component: Profile },
     { path: "/mycollection", component: MyCollection },
@@ -77,3 +77,22 @@ app.use(vue3GoogleLogin, {
   clientId: '385031397260-jsoc206u19aquf516e8de95ahf22hpk4.apps.googleusercontent.com'
 });
 app.use(router).mount("#app");
+
+// Route guards
+function isLoggedIn(to, from, next) {
+  const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+  if (isLoggedIn) {
+    next();
+  } else {
+    next('/');
+  }
+}
+
+function isAdmin(to, from, next) {
+  const isAdmin = sessionStorage.getItem('admin') === 'true';
+  if (isAdmin) {
+    next();
+  } else {
+    next('/');
+  }
+}

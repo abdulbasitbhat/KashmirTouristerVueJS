@@ -1,12 +1,13 @@
 <template>
     <table class="reqTable">
         <thead class="tableHead">
-            <td>Id</td>
+            <td>Request Id</td>
             <td>Image</td>
             <td>Landmark</td>
             <td>Email</td>
-            <td>Hall Of Travellers</td>
-            <td>Upload Certificate</td>
+            <td>Landmark Id</td>
+            <!-- <td>Hall Of Travellers</td> -->
+            <!-- <td>Upload Certificate</td> -->
             <td>Issue</td>
         </thead>
         <tr class="tableRow" v-for="(req, index) in requests" :key="index">
@@ -14,11 +15,12 @@
             <td><img class="image-sec" :src="req.image"></td>
             <td>{{ req.landmark }}</td>
             <td>{{ req.email }}</td>
-            <td>{{ req.hallOfTravellers }}</td>
-            <td><input type="file" @change="handleFileUpload" /></td>
+            <!-- <td>{{ req.hallOfTravellers }}</td> -->
+            <!-- <td><input type="file" @change="handleFileUpload" /></td> -->
+            <td><input type="text" v-model="landmarkId" /></td>
             <td>
                 <span v-if="req.issueStatus === true">Issued</span>
-                <button v-else class="issueButton" @click="uploadCertificate(req.id,req.email)">Issue</button>
+                <button v-else class="issueButton" @click="uploadCertificate(req.id, req.email)">Issue</button>
             </td>
         </tr>
     </table>
@@ -38,7 +40,12 @@ export default {
             link: null,
             prevData: {
 
-            }
+            },
+            certificateCollId: "",
+            newCollection: [],
+            landmarkId: "",
+            image: "",
+            previousCollection: []
         }
     },
     mounted() {
@@ -51,33 +58,75 @@ export default {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    this.certificateData.certificate = e.target.result;
+                    this.image = e.target.result;
                 }
                 reader.readAsDataURL(file)
             }
         },
-        async uploadCertificate(reqId,email) {
-            axios.post("/proxy/api/Certificate/certificate/upload", this.certificateData).then(
-                response => {
-                    this.uid = response.data.id;
-                    this.link = "https://localhost:7248/api/Certificate/certificate/" + response.data.id;
-                    //send an email with the uid and link
+        async uploadCertificate(reqId, email) {
+            try {
+                // Step 1: Post Certificate
+                const cert = {
+                    email: email,
+                    cardId: this.landmarkId,
+                    image: this.image
+                };
+
+                const response = await axios.post("/proxy/api/certificateCollected/addCert", cert);
+                this.certificateCollId = response.data.id;
+
+                // Step 2: Get Previous Collection
+                const link = `/proxy/api/loginDetails/id/${email}`;
+                const previousCollectionResponse = await axios.get(link);
+                this.previousCollection = previousCollectionResponse.data.collection;
+
+                // Step 3: Update User
+                this.previousCollection.push(this.certificateCollId);
+                const user = {
+                    email: email,
+                    name: "",
+                    collection: this.previousCollection
+                };
+
+                await axios.put("/proxy/api/updateUser ", user);
+                console.log("card added to user");
+
+                const updateData = {
+                    "email": "",
+                    "landmark": "",
+                    "image": "",
+                    "hallOfTravellers": true,
+                    "issueStatus": true
                 }
-            ).then(
-                () => {
-                    const link = "/proxy/api/certify/CertificateRequest/delete/" + reqId;
-                    axios.delete(link).then(() => { console.log("Deleted"); })
-                    this.$router.push({
-                        path: '/certificateData',
-                        query: {
-                            uid: this.uid,
-                            link: this.link,
-                            email:email
-                        }
-                    })
-                }
-            )
+                const issueUpdateLink = "/proxy/api/certify/CertificateRequest/update/" + reqId;
+                await axios.put(issueUpdateLink,updateData).then(() => {console.log("issue status changed");window.location.reload()})
+
+            } catch (error) {
+                console.error("Error in uploadCertificate:", error);
+            }
         }
+        // async uploadCertificate(reqId,email) {
+        //     axios.post("/proxy/api/Certificate/certificate/upload", this.certificateData).then(
+        //         response => {
+        //             this.uid = response.data.id;
+        //             this.link = "https://localhost:7248/api/Certificate/certificate/" + response.data.id;
+        //             //send an email with the uid and link
+        //         }
+        //     ).then(
+        //         () => {
+        //             const link = "/proxy/api/certify/CertificateRequest/delete/" + reqId;
+        //             axios.delete(link).then(() => { console.log("Deleted"); })
+        //             this.$router.push({
+        //                 path: '/certificateData',
+        //                 query: {
+        //                     uid: this.uid,
+        //                     link: this.link,
+        //                     email:email
+        //                 }
+        //             })
+        //         }
+        //     )
+        // }
     }
 }
 </script>
