@@ -27,7 +27,7 @@ const handleResponse = async (response) => {
                 console.log("Logged in");
                 sessionStorage.setItem('useremail', userData.email);
                 sessionStorage.setItem('isLoggedIn', true);
-                if (userData.email === "basit316316@gmail.com"){
+                if (userData.email === "basit316316@gmail.com" || userData.email === "kashmirtouristera@gmail.com"){
                     sessionStorage.setItem('admin', true);
                 }
             })
