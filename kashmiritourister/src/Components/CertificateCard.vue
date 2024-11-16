@@ -57,12 +57,12 @@ export default {
                     this.uploadData.landmarkId = defaultOption.id;
                     this.uploadData.landmark = defaultLandmark;
                 }
-                console.log("uploadData", this.uploadData)
-                axios.post("/proxy/api/certify/CertificateRequest/addRequest", this.uploadData).then(response => { console.log("saved successfully") })
-                alert("Uploaded Successfully");
             }
+            axios.post("/proxy/api/certify/CertificateRequest/addRequest", this.uploadData).then(response => { console.log("saved successfully") })
+            alert("Uploaded Successfully");
         },
         handleFileUpload(event) {
+            console.log("inside handleFileUpload")
             const file = event.target.files[0];
             if (file) {
                 // Logic for conversion of image to base64 string for storage at backend

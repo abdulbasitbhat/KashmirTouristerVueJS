@@ -1,5 +1,7 @@
 <template>
     <router-link class="routerLink" :to="`/landmark/${id}`">
+    <!-- <router-link class="routerLink" :to="`/certificatepage`"> -->
+        <!-- <div @click="certificatepage"> -->
         <div class="ccard" style="width: 18rem;">
             <img class="card-img-top" :src="image" alt="Card image cap">
             <div class="ccard-body">
@@ -13,6 +15,7 @@
                 </p>
             </div>
         </div>
+    <!-- </div> -->
     </router-link>
 
 </template>
@@ -28,6 +31,23 @@ export default {
     //     }
     // },
     props: ['id','landmark', 'location', 'type', 'properties', 'image','certid'],
+    methods:{
+        certificatepage(){
+            this.$router.push(
+             {   
+             path:"/certificatepage",
+             query:{
+                id:this.id,
+                landmark:this.landmark,
+                location:this.location,
+                type:this.type,
+                properties:this.properties,
+                image:this.image,
+                certid:this.certid
+             }
+            })
+        }
+    }
 }
 
 </script>
@@ -44,6 +64,7 @@ export default {
 
 .ccard img{
     border-radius: 6px 6px 0px 0px;
+    object-fit: cover;
 }
 
 .ccard-text {

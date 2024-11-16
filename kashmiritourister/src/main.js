@@ -27,6 +27,7 @@ import MyCollection from "./Components/MyCollection.vue";
 import CollectedCards from "./Components/CollectedCards.vue";
 import vue3GoogleLogin from 'vue3-google-login';
 import GoogleSignIn from "./Components/GoogleSignIn.vue";
+import CertificatePage from "./Components/CertificatePage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +45,7 @@ const router = createRouter({
     { path: "/profile", component: Profile },
     { path: "/mycollection", component: MyCollection },
     { path: "/signIn", component: GoogleSignIn },
+    { path: "/certificatepage", component: CertificatePage },
   ],
 });
 
@@ -73,6 +75,7 @@ app.component("Sidebar", Sidebar);
 app.component("MyCollection", MyCollection);
 app.component("CollectedCards", CollectedCards);
 app.component("GoogleSignIn",GoogleSignIn)
+app.component("CertificatePage",CertificatePage)
 app.use(vue3GoogleLogin, {
   clientId: '385031397260-jsoc206u19aquf516e8de95ahf22hpk4.apps.googleusercontent.com'
 });

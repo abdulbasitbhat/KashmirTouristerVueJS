@@ -4,7 +4,7 @@
         <div class="collection-container">
             <CollectedCards class="coll-card-container" v-for="(landmark, index) in collection" :key="index"
                 :id="landmark.id" :landmark="landmark.landmark" :location="landmark.location" :type="landmark.type"
-                :properties="landmark.properties" :image="landmark.image" :certid="collectionIds[index]" />
+                :properties="landmark.properties" :image="landmark.selfie" :certid="collectionIds[index]" />
         </div>
     </div>
 </template>
@@ -18,31 +18,46 @@ export default {
         return {
             landmarks: [],
             collectionIds: [],
-            collection:[],
-            cardId:''
+            collection: [],
+            cardId: '',
+            selfie: ''
         }
     },
     methods: {
         async getAllCollection() {
             const link = "/proxy/api/loginDetails/id/" + sessionStorage.getItem("useremail");
-            await axios.get(link).then((response) => {this.collectionIds = response.data.collection;});
+            await axios.get(link).then((response) => {
+                this.collectionIds = response.data.collection;
+                console.log("col data", response.data);
+            });
 
-            this.collectionIds.forEach(async (item, index) => {
+            // Use Promise.all to handle multiple asynchronous calls
+            const landmarkPromises = this.collectionIds.map(async (item) => {
                 const linkCert = "/proxy/api/certificateCollected/id/" + item;
-                console.log("linkCert",linkCert)
-                await axios.get(linkCert).then((resp) => {this.cardId=resp.data.cardId;console.log("resp",resp)})
-                const landmarkLink = "/proxy/api/Landmarks/id/" + this.cardId;
-                await axios.get(landmarkLink).then((resp) => {
-                    const data = {
-                        ...resp.data,
-                        "certId":item
-                    }
-                    this.collection.push(data)})
-            })     
+                console.log("linkCert", linkCert);
+
+                const resp = await axios.get(linkCert);
+                const cardId = resp.data.cardId;
+                const selfie = resp.data.image;
+
+                const landmarkLink = "/proxy/api/Landmarks/id/" + cardId;
+                const landmarkResp = await axios.get(landmarkLink);
+
+                // Construct the data object for the landmark
+                return {
+                    ...landmarkResp.data,
+                    certId: item,
+                    selfie: selfie
+                };
+            });
+
+            // Wait for all landmark data to be fetched
+            this.collection = await Promise.all(landmarkPromises);
+            console.log("collection", this.collection);
         }
     },
     mounted() {
-       this.getAllCollection();
+        this.getAllCollection();
     }
 }
 

@@ -21,7 +21,7 @@
             <td>{{ req.landmarkId }}</td>
             <td>
                 <span v-if="req.issueStatus === true">Issued</span>
-                <button v-else class="issueButton" @click="uploadCertificate(req.id, req.email, req.landmarkId)">Issue</button>
+                <button v-else class="issueButton" @click="uploadCertificate(req.id, req.email, req.landmarkId,req.image)">Issue</button>
             </td>
         </tr>
     </table>
@@ -64,14 +64,15 @@ export default {
                 reader.readAsDataURL(file)
             }
         },
-        async uploadCertificate(reqId, email, landmarkId) {
+        async uploadCertificate(reqId, email, landmarkId,image) {
             try {
                 // Step 1: Post Certificate
                 const cert = {
                     email: email,
                     cardId: landmarkId,
-                    image: this.image
+                    image: image
                 };
+                console.log("cert",cert)
 
                 const response = await axios.post("/proxy/api/certificateCollected/addCert", cert);
                 this.certificateCollId = response.data.id;
