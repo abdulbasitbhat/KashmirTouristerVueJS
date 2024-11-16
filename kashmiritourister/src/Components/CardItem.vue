@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style>
+.card-img-top{
+    object-fit: cover;
+}
 .card {
     width: 300px;
     height: 400px;

@@ -56,11 +56,13 @@ export default {
       this.isLoggedIn = false;
       this.username= "";
       this.admin=false;
+      return this.$router.push("/")
     },
     handleLogin() {
       sessionStorage.setItem('isLoggedIn', true);
       this.isLoggedIn = true;
       this.admin = sessionStorage.getItem('admin') === 'true'; 
+      return this.$router.push("/")
     },
     checkLoginState() {
       this.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true'; // Check login state

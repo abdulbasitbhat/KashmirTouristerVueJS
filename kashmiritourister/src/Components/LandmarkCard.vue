@@ -13,7 +13,8 @@
             </div>
             </p>
             <div v-if="isAdmin" class="buttons">
-                <button v-if="isAdmin" class="delete-button" @click="handleAddImages">Add Images</button>
+                <!-- <button v-if="isAdmin" class="delete-button" @click="handleAddImages">Add Images</button> -->
+                <button v-if="isAdmin" class="delete-button" @click="handleEdit">Edit</button>
                 <button v-if="isAdmin" class="delete-button" @click="handleDelete">Delete</button>
             </div>
         </div>
@@ -33,6 +34,14 @@ export default {
         },
         async handleAddImages() {
 
+        },
+        async handleEdit(){
+            return this.$router.push({
+                path:"/editlandmark",
+                query:{
+                    id:this.id
+                }
+            })
         }
     },
     computed: {

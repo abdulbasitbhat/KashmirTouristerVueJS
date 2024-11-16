@@ -28,24 +28,26 @@ import CollectedCards from "./Components/CollectedCards.vue";
 import vue3GoogleLogin from 'vue3-google-login';
 import GoogleSignIn from "./Components/GoogleSignIn.vue";
 import CertificatePage from "./Components/CertificatePage.vue";
+import EditLandmark from "./Components/EditLandmark.vue";
+import EditBlog from "./Components/EditBlog.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: App },
     { path: "/landmark/:id", component: LandmarkItem },
-    { path: "/plantrip", component: PlanTrip },
     { path: "/blogs", component: Blogs },
+    { path: "/blog/:id", component: BlogItem },
+
     { path: "/createBlog", component: CreateBlog, beforeEnter: isAdmin  },
     { path: "/addLandmark", component: AddLandmarks, beforeEnter: isAdmin  },
-    { path: "/blog/:id", component: BlogItem },
-    { path: "/certify", component: CertificateCard, beforeEnter: isLoggedIn  },
     { path: "/certifyrequests", component: CertifyRequests, beforeEnter: isAdmin  },
-    { path: "/certificateData", component: CertificateData },
-    { path: "/profile", component: Profile },
-    { path: "/mycollection", component: MyCollection },
-    { path: "/signIn", component: GoogleSignIn },
-    { path: "/certificatepage", component: CertificatePage },
+    { path: "/editlandmark", component: EditLandmark, beforeEnter: isAdmin  },
+    { path: "/editblog", component: EditBlog, beforeEnter: isAdmin },
+
+    { path: "/certify", component: CertificateCard, beforeEnter: isLoggedIn  },
+    { path: "/profile", component: Profile, beforeEnter: isLoggedIn  },
+    { path: "/mycollection", component: MyCollection, beforeEnter: isLoggedIn  },
   ],
 });
 
@@ -75,7 +77,9 @@ app.component("Sidebar", Sidebar);
 app.component("MyCollection", MyCollection);
 app.component("CollectedCards", CollectedCards);
 app.component("GoogleSignIn",GoogleSignIn)
-app.component("CertificatePage",CertificatePage)
+app.component("CertificatePage",CertificatePage);
+app.component("EditLandmark",EditLandmark);
+app.component("EditBlog",EditBlog);
 app.use(vue3GoogleLogin, {
   clientId: '385031397260-jsoc206u19aquf516e8de95ahf22hpk4.apps.googleusercontent.com'
 });

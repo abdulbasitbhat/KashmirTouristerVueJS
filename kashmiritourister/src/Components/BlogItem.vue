@@ -9,6 +9,8 @@
         <br>
         <div v-html="blogData.blog"></div>
     </div>
+    <button v-if="isAdmin" class="delete-button" @click="handleEdit">Edit</button>
+    <br>
     <button v-if="isAdmin" class="delete-button" @click="handleDelete">Delete</button>
 </template>
 
@@ -35,7 +37,16 @@ export default {
         async handleDelete(){
             const link = "/proxy/api/Blogs/deleteBlog/" + this.$route.params.id;
             axios.delete(link).then(response => {console.log("Successfully Deleted");this.$router.push('/blogs')})
+        },
+        async handleEdit(){
+            return this.$router.push({
+                path:"/editblog",
+                query:{
+                    id:this.$route.params.id
+                }
+            })
         }
+        
     },
     computed: {
         isAdmin() {

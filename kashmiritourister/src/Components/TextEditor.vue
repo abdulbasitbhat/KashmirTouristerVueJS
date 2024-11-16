@@ -28,7 +28,7 @@ import Quill from 'quill';
                 "blog":this.quill.root.innerHTML
             }
             console.log("json",jsonData)
-            axios.post('/proxy/api/Blogs/addBlog',jsonData).then(response =>{console.log("Successfully Uploaded");}).catch(err => console.log(err))
+            axios.post('/proxy/api/Blogs/addBlog',jsonData).then(response =>{console.log("Successfully Uploaded");this.$router.push("/blogs")}).catch(err => console.log(err))
         }
     },
     mounted() {
