@@ -1,6 +1,6 @@
 <template>
     <div class="myCollHolder">
-        <Sidebar />
+        <Sidebar :active="'mycollection'"/>
         <div class="collection-container">
             <CollectedCards class="coll-card-container" v-for="(landmark, index) in collection" :key="index"
                 :id="landmark.id" :landmark="landmark.landmark" :location="landmark.location" :type="landmark.type"

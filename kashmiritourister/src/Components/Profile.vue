@@ -1,6 +1,6 @@
 <template>
     <div class="myProfileHolder">
-        <Sidebar />
+        <Sidebar :active="'myprofile'"/>
         <div class="profile-container">
             {{email}}
         </div>

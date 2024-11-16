@@ -12,9 +12,9 @@
                 <div class="card-property" v-for="(prop, index) in properties">{{ prop }}</div>
             </div>
             </p>
-            <div class="buttons">
-                <button class="delete-button" @click="handleAddImages">Add Images</button>
-                <button class="delete-button" @click="handleDelete">Delete</button>
+            <div v-if="isAdmin" class="buttons">
+                <button v-if="isAdmin" class="delete-button" @click="handleAddImages">Add Images</button>
+                <button v-if="isAdmin" class="delete-button" @click="handleDelete">Delete</button>
             </div>
         </div>
     </div>
@@ -33,6 +33,11 @@ export default {
         },
         async handleAddImages() {
 
+        }
+    },
+    computed: {
+        isAdmin() {
+            return sessionStorage.getItem('admin') === 'true'; // Ensure this returns a boolean
         }
     },
 }

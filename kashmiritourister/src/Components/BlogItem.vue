@@ -9,7 +9,7 @@
         <br>
         <div v-html="blogData.blog"></div>
     </div>
-    <button class="delete-button" @click="handleDelete">Delete</button>
+    <button v-if="isAdmin" class="delete-button" @click="handleDelete">Delete</button>
 </template>
 
 <script>
@@ -36,7 +36,12 @@ export default {
             const link = "/proxy/api/Blogs/deleteBlog/" + this.$route.params.id;
             axios.delete(link).then(response => {console.log("Successfully Deleted");this.$router.push('/blogs')})
         }
-    }
+    },
+    computed: {
+        isAdmin() {
+            return sessionStorage.getItem('admin') === 'true'; // Ensure this returns a boolean
+        }
+    },
 }
 
 </script>

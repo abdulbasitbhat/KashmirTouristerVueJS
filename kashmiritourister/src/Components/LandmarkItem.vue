@@ -28,9 +28,9 @@
             </div>
         </div>
     </div>
-    <div class="imageGridMain">
+    <!-- <div class="imageGridMain">
         <ImagesGrid />
-    </div>
+    </div> -->
 
 </template>
 
@@ -56,9 +56,10 @@ export default {
             },
             place: null,
             currentWeather: {},
-            forcast: {}
+            forcast: {},
         }
     },
+    
     props: ['id'],
     mounted() {
         const id = this.$route.params.id;
